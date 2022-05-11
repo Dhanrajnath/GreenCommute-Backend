@@ -29,4 +29,9 @@ public class Jobs {
     @Column(name = "job_location")
     private String jobLocation;
 
+    @ToString.Exclude
+    @ManyToMany
+    @JoinColumn(name = "skill_id")
+    @JsonManagedReference
+    private List<Skills> skillList;
 }

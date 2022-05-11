@@ -1,7 +1,6 @@
 package com.GreenCommute.Backend.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,18 +13,18 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "skills")
+public class Skills {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
+    private int skillId;
 
-    @Column(name = "user_name")
-    private String userName;
+    @Column(name = "skill_name")
+    private String skillName;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JsonManagedReference
-    private List<SavedJobs> savedJobsList;
+    @ManyToMany(mappedBy = "skillList", cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<Jobs> jobsList;
 }

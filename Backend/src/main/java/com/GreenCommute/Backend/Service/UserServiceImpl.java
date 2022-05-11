@@ -8,11 +8,12 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserJpa userJpa;
 
+    @Override
     public Optional<User> getUserById(int userId) {
         return userJpa.findById(userId);
     }
