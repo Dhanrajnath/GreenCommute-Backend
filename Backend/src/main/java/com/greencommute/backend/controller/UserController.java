@@ -3,7 +3,6 @@ package com.greencommute.backend.controller;
 import com.greencommute.backend.dto.ResponseDto;
 import com.greencommute.backend.dto.UserDto;
 import com.greencommute.backend.entity.Jobs;
-import com.greencommute.backend.entity.Skills;
 import com.greencommute.backend.entity.User;
 import com.greencommute.backend.exception.DataNotFoundException;
 import com.greencommute.backend.mapper.UserMapper;
@@ -18,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Slf4j
 @RestController
@@ -30,15 +28,15 @@ public class UserController {
     public SavedJobServiceImpl savedJobService;
 
     @Autowired
-    public UserMapper userMapper;
+    static UserMapper userMapper;
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable(value = "id") int id) {
         Optional<User> user = userService.getUserById(id);
-        if (!user.isPresent()) {
+        if (user.isEmpty()) {
             throw new DataNotFoundException("No user with id: " + id);
         }
-        UserDto userDto = userMapper.INSTANCE.toUserDto(user.get());
+        UserDto userDto = userMapper.toUserDto(user.get());
         return ResponseEntity.ok().body(userDto);
     }
 
@@ -49,25 +47,23 @@ public class UserController {
 
     @PostMapping("/{id}/savedJobs")
     public ResponseEntity<ResponseDto> saveJobsForUser(@PathVariable(value = "id") int id, @RequestBody Map<String,Integer> reqPayload) {
+          final String jobId = "jobId";
         List<Jobs> savedJobList= savedJobService.getSavedJobsByUserID(id).stream().filter(jobs -> {
             int savedJobId=jobs.getJobId();
-            if(savedJobId == reqPayload.get("jobId")){
-                return true;
-            }
-            else return false;
+            return savedJobId == reqPayload.get(jobId);
         }).collect(Collectors.toList());
-        if(savedJobList.size()!=0){
+        if(!savedJobList.isEmpty()){
             ResponseDto responseDto = new ResponseDto();
             responseDto.setUserId(id);
-            responseDto.setJobId(reqPayload.get("jobId"));
+            responseDto.setJobId(reqPayload.get(jobId));
             responseDto.setMessage("Job already added to saved jobs");
             return ResponseEntity.badRequest().body(responseDto);
         }
         else {
-            savedJobService.saveToSavedJobs(id, reqPayload.get("jobId"));
+            savedJobService.saveToSavedJobs(id, reqPayload.get(jobId));
             ResponseDto responseDto = new ResponseDto();
             responseDto.setUserId(id);
-            responseDto.setJobId(reqPayload.get("jobId"));
+            responseDto.setJobId(reqPayload.get(jobId));
             responseDto.setMessage("Successfully added to saved jobs");
             return ResponseEntity.ok().body(responseDto);
         }
@@ -75,11 +71,12 @@ public class UserController {
 
     @DeleteMapping("/{id}/savedJobs")
     public ResponseEntity<ResponseDto> deleteSavedJobsOfUser(@PathVariable(value="id") int id, @RequestBody Map<String,Integer> reqPayload) {
-        Boolean res=savedJobService.deleteSavedJobs(id,reqPayload.get("jobId"));
+        final String jobId = "jobId";
+        Boolean res=savedJobService.deleteSavedJobs(id,reqPayload.get(jobId));
         ResponseDto responseDto=new ResponseDto();
         responseDto.setUserId(id);
-        responseDto.setJobId(reqPayload.get("jobId"));
-        if(res){
+        responseDto.setJobId(reqPayload.get(jobId));
+        if(Boolean.TRUE.equals(res)){
             responseDto.setMessage("Successfully deleted saved job");
             return ResponseEntity.ok().body(responseDto);
         }

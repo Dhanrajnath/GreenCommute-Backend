@@ -28,7 +28,7 @@ public class JobsController {
     public Helper helper;
 
     @Autowired
-    public JobMapper jobMapper;
+    static  JobMapper jobMapper;
 
     @GetMapping
     public ResponseEntity<List<JobsDto>> getAllJobs(@RequestParam(value="location",required = false) String loc, @RequestParam(value="skill",required = false) String[] skill) {
@@ -55,10 +55,10 @@ public class JobsController {
     @GetMapping("/{id}")
     public ResponseEntity<JobsDto> getJobById(@PathVariable(value="id") int id){
         Optional<Jobs> job = jobService.getJobById(id);
-        if (!job.isPresent()){
+        if (job.isEmpty()){
             throw new DataNotFoundException("No job found with id: "+id);
         }
-        JobsDto jobDto = jobMapper.INSTANCE.toJobsDto(job.get());
+        JobsDto jobDto = jobMapper.toJobsDto(job.get());
         return ResponseEntity.ok().body(jobDto);
     }
 }
