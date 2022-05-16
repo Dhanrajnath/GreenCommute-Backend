@@ -28,7 +28,7 @@ public class JobsController {
     public Helper helper;
 
     @Autowired
-    static  JobMapper jobMapper;
+    public JobMapper jobMapper;
 
     @GetMapping
     public ResponseEntity<List<JobsDto>> getAllJobs(@RequestParam(value="location",required = false) String loc, @RequestParam(value="skill",required = false) String[] skill) {

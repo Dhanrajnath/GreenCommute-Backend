@@ -28,7 +28,7 @@ public class UserController {
     public SavedJobServiceImpl savedJobService;
 
     @Autowired
-    static UserMapper userMapper;
+    public UserMapper userMapper;
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable(value = "id") int id) {

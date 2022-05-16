@@ -1,5 +1,6 @@
 package com.greencommute.backend;
 
+import com.greencommute.backend.entity.Jobs;
 import com.greencommute.backend.entity.User;
 import com.greencommute.backend.service.SavedJobServiceImpl;
 import com.greencommute.backend.service.UserServiceImpl;
@@ -11,6 +12,8 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.doNothing;
@@ -43,4 +46,14 @@ public class UserTests {
         savedJobService.saveToSavedJobs(userId,jobId);
         Mockito.verify(savedJobService).saveToSavedJobs(userId,jobId);
     }
+
+    @Test
+    public void getSavedJobTest() {
+        List<Jobs> jobsList = Collections.emptyList();
+        List<Jobs> savedJob = savedJobService.getSavedJobsByUserID(1);
+        Mockito.when(savedJobService.getSavedJobsByUserID(1)).thenReturn(jobsList);
+        Assertions.assertEquals(jobsList, savedJob);
+        Mockito.verify(savedJobService).getSavedJobsByUserID(1);
+    }
+
 }
