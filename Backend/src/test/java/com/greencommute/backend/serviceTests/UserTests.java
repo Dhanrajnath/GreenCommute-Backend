@@ -1,4 +1,4 @@
-package com.greencommute.backend;
+package com.greencommute.backend.serviceTests;
 
 import com.greencommute.backend.entity.Jobs;
 import com.greencommute.backend.entity.User;
