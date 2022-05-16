@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @PostMapping("/{id}/savedJobs")
-    public ResponseDto saveJobsForUser(@PathVariable(value = "id") int id, @RequestBody Map<String,Integer> reqPayload) {
+    public ResponseEntity<ResponseDto> saveJobsForUser(@PathVariable(value = "id") int id, @RequestBody Map<String,Integer> reqPayload) {
         List<Jobs> savedJobList= savedJobService.getSavedJobsByUserID(id).stream().filter(jobs -> {
             int savedJobId=jobs.getJobId();
             if(savedJobId == reqPayload.get("jobId")){
@@ -61,7 +61,7 @@ public class UserController {
             responseDto.setUserId(id);
             responseDto.setJobId(reqPayload.get("jobId"));
             responseDto.setMessage("Job already added to saved jobs");
-            return responseDto;
+            return ResponseEntity.badRequest().body(responseDto);
         }
         else {
             savedJobService.saveToSavedJobs(id, reqPayload.get("jobId"));
@@ -69,22 +69,23 @@ public class UserController {
             responseDto.setUserId(id);
             responseDto.setJobId(reqPayload.get("jobId"));
             responseDto.setMessage("Successfully added to saved jobs");
-            return responseDto;
+            return ResponseEntity.ok().body(responseDto);
         }
     }
 
     @DeleteMapping("/{id}/savedJobs")
-    public ResponseDto deleteSavedJobsOfUser(@PathVariable(value="id") int id, @RequestBody Map<String,Integer> reqPayload) {
+    public ResponseEntity<ResponseDto> deleteSavedJobsOfUser(@PathVariable(value="id") int id, @RequestBody Map<String,Integer> reqPayload) {
         Boolean res=savedJobService.deleteSavedJobs(id,reqPayload.get("jobId"));
         ResponseDto responseDto=new ResponseDto();
         responseDto.setUserId(id);
         responseDto.setJobId(reqPayload.get("jobId"));
         if(res){
             responseDto.setMessage("Successfully deleted saved job");
+            return ResponseEntity.ok().body(responseDto);
         }
         else {
             responseDto.setMessage("No saved job found with user id and job id");
+            return ResponseEntity.badRequest().body(responseDto);
         }
-        return responseDto;
     }
 }

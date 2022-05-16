@@ -23,7 +23,7 @@ public class Helper {
             List<Skills> skill = job.getSkillList();
             List<String> skillNames = getSkills(skill);
             for (String skillName : skillToSearch) {
-                if (skillNames.indexOf(skillName) != -1)
+                if (skillNames.contains(skillName))
                     return true;
             }
             return false;
