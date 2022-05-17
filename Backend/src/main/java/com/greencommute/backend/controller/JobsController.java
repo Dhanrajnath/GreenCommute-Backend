@@ -20,8 +20,12 @@ import java.util.Optional;
 @RequestMapping("api/v1/jobs")
 public class JobsController {
 
-    @Autowired
     public JobServiceImpl jobService;
+
+    @Autowired
+    public JobsController(JobServiceImpl jobService) {
+        this.jobService = jobService;
+    }
 
     @Autowired
     public Helper helper;
@@ -32,8 +36,8 @@ public class JobsController {
     @GetMapping
     public ResponseEntity<List<JobsDto>> getAllJobs(@RequestParam(value="location",required = false) String loc, @RequestParam(value="skill",required = false) String[] skill) {
         List<Jobs> jobsList = jobService.getAllJobs();
-        List<JobsDto> jobsDtoList = jobMapper.toJobDtoList(jobsList);
         if(loc==null && skill ==null){
+            List<JobsDto> jobsDtoList = jobMapper.toJobDtoList(jobsList);
             return ResponseEntity.ok().body(jobsDtoList);
         } else if (loc==null) {
             List<Jobs> jobsList1 = helper.getJobsSearchBySkills(jobsList,skill);
