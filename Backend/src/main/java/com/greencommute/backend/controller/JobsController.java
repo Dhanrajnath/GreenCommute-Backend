@@ -39,7 +39,7 @@ public class JobsController {
         } else if (loc==null) {
             List<Jobs> jobsList1 = helper.getJobsSearchBySkills(jobsList,skill);
             List<JobsDto> jobsDtoList1 = jobMapper.toJobDtoList(jobsList1);
-         return ResponseEntity.ok().body(jobsDtoList1);
+            return ResponseEntity.ok().body(jobsDtoList1);
         } else if (skill==null) {
             List<Jobs> jobsList2=jobService.getJobsSearchByLocation(loc);
             List<JobsDto> jobsDtoList2 = jobMapper.toJobDtoList(jobsList2);
@@ -55,10 +55,10 @@ public class JobsController {
     @GetMapping("/{id}")
     public ResponseEntity<JobsDto> getJobById(@PathVariable(value="id") int id){
         Optional<Jobs> job = jobService.getJobById(id);
-        if (!job.isPresent()){
+        if (job.isEmpty()){
             throw new DataNotFoundException("No job found with id: "+id);
         }
-        JobsDto jobDto = jobMapper.INSTANCE.toJobsDto(job.get());
+        JobsDto jobDto = jobMapper.toJobsDto(job.get());
         return ResponseEntity.ok().body(jobDto);
     }
 }

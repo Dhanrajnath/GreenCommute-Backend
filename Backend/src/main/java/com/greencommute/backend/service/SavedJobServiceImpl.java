@@ -28,32 +28,36 @@ public class SavedJobServiceImpl implements  SavedJobService{
     SavedJobsJpa savedJobsJpa;
 
     @Override
-    public String saveToSavedJobs(int userId, int jobId) {
-    Optional<User> user = userService.getUserById(userId);
-    Optional<Jobs> jobs = jobService.getJobById(jobId);
-    SavedJobs savedJobs=new SavedJobs(new Timestamp(System.currentTimeMillis()),user.get(),jobs.get());
-    savedJobsJpa.save(savedJobs);
-        return "job id: "+jobId+" saved for user with id: "+userId;
+    public void saveToSavedJobs(int userId, int jobId) {
+        Optional<User> user = userService.getUserById(userId);
+        Optional<Jobs> jobs = jobService.getJobById(jobId);
+        if(user.isPresent() && jobs.isPresent()) {
+            SavedJobs savedJobs = new SavedJobs(new Timestamp(System.currentTimeMillis()), user.get(), jobs.get());
+            savedJobsJpa.save(savedJobs);
+        }
     }
 
     @Override
     public List<Jobs> getSavedJobsByUserID(int userId) {
         Optional<User> user = userJpa.findById(userId);
         List<Jobs> jobList = new ArrayList<>();
-        List<SavedJobs> savedJobsList =user.get().getSavedJobsList();
-        for (SavedJobs savedJobs: savedJobsList) {
-            jobList.add(savedJobs.getJobs());
+        if(user.isPresent()) {
+            List<SavedJobs> savedJobsList = user.get().getSavedJobsList();
+            for (SavedJobs savedJobs : savedJobsList) {
+                jobList.add(savedJobs.getJobs());
+            }
+            return jobList;
         }
         return jobList;
     }
 
     @Override
     public Boolean deleteSavedJobs(int userId,int jobId) {
-       SavedJobs savedJob = savedJobsJpa.deleteByUserAndJobId(userId, jobId);
-       if(savedJob == null){
-           return false;
-       }
-       savedJobsJpa.delete(savedJob);
-       return true;
+        SavedJobs savedJob = savedJobsJpa.deleteByUserAndJobId(userId, jobId);
+        if(savedJob == null){
+            return false;
+        }
+        savedJobsJpa.delete(savedJob);
+        return true;
     }
 }
