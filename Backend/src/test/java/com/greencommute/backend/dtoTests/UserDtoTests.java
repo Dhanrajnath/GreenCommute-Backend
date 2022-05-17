@@ -15,7 +15,7 @@ class UserDtoTests {
     void userDtoEntityTest(){
         Assertions.assertEquals(1,userDto.getUserId());
         Assertions.assertEquals("userDTO",userDto.getUserName());
-
+        userDto = new UserDto();
         userDto.setUserId(2);
         userDto.setUserName("user2");
 

@@ -17,7 +17,7 @@ class JobsDtoTests {
         Assertions.assertEquals("hyderabad",jobsDto.getJobLocation());
         Assertions.assertNull(jobsDto.getSkillList());
         Assertions.assertNull(jobsDto.getCommuteList());
-
+        jobsDto=new JobsDto();
         jobsDto.setJobId(2);
         jobsDto.setJobTitle("a");
         jobsDto.setJobDescription("b");

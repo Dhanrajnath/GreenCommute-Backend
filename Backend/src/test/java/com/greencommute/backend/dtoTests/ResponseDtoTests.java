@@ -15,7 +15,7 @@ class ResponseDtoTests {
         Assertions.assertEquals(1,responseDto.getJobId());
         Assertions.assertEquals(1,responseDto.getUserId());
         Assertions.assertEquals("success",responseDto.getMessage());
-
+        responseDto=new ResponseDto();
         responseDto.setJobId(2);
         responseDto.setUserId(2);
         responseDto.setMessage("Failed");
