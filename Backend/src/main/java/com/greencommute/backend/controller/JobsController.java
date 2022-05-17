@@ -18,7 +18,6 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequestMapping("api/v1/jobs")
-@CrossOrigin(origins = "*")
 public class JobsController {
 
     @Autowired
