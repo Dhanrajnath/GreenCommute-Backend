@@ -11,7 +11,7 @@ import java.util.Optional;
 @Service
 public class JobServiceImpl implements JobService {
 
-    public JobsJpa jobsJpa;
+    private final JobsJpa jobsJpa;
 
     @Autowired
     public JobServiceImpl(JobsJpa jobsJpa) {

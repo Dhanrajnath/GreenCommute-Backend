@@ -15,17 +15,21 @@ import java.util.Optional;
 
 @Service
 public class SavedJobServiceImpl implements  SavedJobService{
-
-    @Autowired
-    UserJpa userJpa;
-
     @Autowired
     UserService userService;
 
     @Autowired
     JobService jobService;
+
     @Autowired
+    UserJpa userJpa;
+
     SavedJobsJpa savedJobsJpa;
+
+    @Autowired
+    public SavedJobServiceImpl( SavedJobsJpa savedJobsJpa) {
+        this.savedJobsJpa = savedJobsJpa;
+    }
 
     @Override
     public void saveToSavedJobs(int userId, int jobId) {

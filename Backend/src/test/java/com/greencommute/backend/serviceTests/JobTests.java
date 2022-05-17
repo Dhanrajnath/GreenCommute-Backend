@@ -1,4 +1,4 @@
-package com.greencommute.backend;
+package com.greencommute.backend.serviceTests;
 
 import com.greencommute.backend.entity.Jobs;
 import com.greencommute.backend.repository.JobsJpa;
@@ -58,7 +58,7 @@ class JobTests {
     }
 
     @Test
-    void getJobsSearchByLocation() {
+    void getJobsSearchByLocationTest() {
         List<Jobs> jobsList = new ArrayList<>();
         Jobs job = new Jobs(1,"Software Engineer","Developer","Hyderabad",null,null);
         jobsList.add(job);
