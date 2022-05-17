@@ -1,7 +1,6 @@
 package com.greencommute.backend.service;
 
 import com.greencommute.backend.entity.User;
-import com.greencommute.backend.repository.JobsJpa;
 import com.greencommute.backend.repository.UserJpa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

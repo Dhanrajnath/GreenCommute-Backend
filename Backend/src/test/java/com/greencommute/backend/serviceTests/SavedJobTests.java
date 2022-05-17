@@ -1,13 +1,10 @@
 package com.greencommute.backend.serviceTests;
 
 import com.greencommute.backend.entity.Jobs;
-import com.greencommute.backend.entity.SavedJobs;
 import com.greencommute.backend.entity.User;
 import com.greencommute.backend.repository.SavedJobsJpa;
-import com.greencommute.backend.repository.UserJpa;
 import com.greencommute.backend.service.SavedJobService;
 import com.greencommute.backend.service.SavedJobServiceImpl;
-import com.greencommute.backend.service.UserServiceImpl;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,11 +14,8 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import static org.mockito.Mockito.doNothing;
 
@@ -41,12 +35,12 @@ public class SavedJobTests {
     }
 
     @Test
-    public void saveJob() {
-//        User user = new User(1, "Dhanrajnath", null);
-//        Jobs job = new Jobs(1,"Software Engineer","Developer","Hyderabad",null,null);
-//        SavedJobs savedJob = new SavedJobs(new Timestamp(System.currentTimeMillis()),user,job);
-//        doNothing().when(savedJobService).saveToSavedJobs(1,1);
-//        Mockito.verify(savedJobsJpa).findById(1);
+    public void saveJobTest() {
+        User user = new User(1,"user",null);
+        Jobs job =  new Jobs(1, "Software Engineer", "Developer", "Hyderabad", null, null);
+        doNothing().when(savedJobService).saveToSavedJobs(user.getUserId(), job.getJobId());
+        savedJobService.saveToSavedJobs(1,1);
+        Mockito.verify(savedJobService).saveToSavedJobs(1,1);
     }
 
     @Test
@@ -68,7 +62,9 @@ public class SavedJobTests {
         Mockito.when(savedJobService.deleteSavedJobs(1,1)).thenReturn(res);
         savedJob.remove(0);
         Assertions.assertEquals(savedJob, savedJobService.getSavedJobsByUserID(1));
-        Assertions.assertEquals(savedJobService.deleteSavedJobs(1,2),false);
+        boolean res2=false;
+        Mockito.when(savedJobService.deleteSavedJobs(1,12)).thenReturn(res2);
+        Assertions.assertEquals(false, savedJobService.deleteSavedJobs(1, 12));
     }
 
 }
