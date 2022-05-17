@@ -22,10 +22,16 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("api/v1/users")
 public class UserController {
-    @Autowired
+
     public UserServiceImpl userService;
-    @Autowired
+
     public SavedJobServiceImpl savedJobService;
+
+    @Autowired
+    public UserController(UserServiceImpl userService, SavedJobServiceImpl savedJobService) {
+        this.userService = userService;
+        this.savedJobService = savedJobService;
+    }
 
     @Autowired
     public UserMapper userMapper;
@@ -42,13 +48,13 @@ public class UserController {
 
     @GetMapping("/{id}/savedJobs")
     public List<Jobs> getSavedJobsOfUser(@PathVariable(value = "id") int id) {
-        return savedJobService.getSavedJobsByUserID(id);
+        return savedJobService.getSavedJobsByUserId(id);
     }
 
     @PostMapping("/{id}/savedJobs")
     public ResponseEntity<ResponseDto> saveJobsForUser(@PathVariable(value = "id") int id, @RequestBody Map<String,Integer> reqPayload) {
         final String jobId = "jobId";
-        List<Jobs> savedJobList= savedJobService.getSavedJobsByUserID(id).stream().filter(jobs -> {
+        List<Jobs> savedJobList= savedJobService.getSavedJobsByUserId(id).stream().filter(jobs -> {
             int savedJobId=jobs.getJobId();
             return savedJobId == reqPayload.get(jobId);
         }).collect(Collectors.toList());

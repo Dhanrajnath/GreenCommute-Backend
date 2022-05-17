@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface SavedJobService {
     void saveToSavedJobs(int userId, int jobId);
-    List<Jobs> getSavedJobsByUserID(int userId);
+    List<Jobs> getSavedJobsByUserId(int userId);
 
     Boolean deleteSavedJobs(int userId,int jobId);
 

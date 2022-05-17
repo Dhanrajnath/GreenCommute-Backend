@@ -48,9 +48,9 @@ public class SavedJobTests {
         Jobs job = new Jobs(1,"Software Engineer","Developer","Hyderabad",null,null);
         List<Jobs> savedJob = new ArrayList<>();
         savedJob.add(job);
-        Mockito.when(savedJobService.getSavedJobsByUserID(1)).thenReturn(savedJob);
-        Assertions.assertEquals(savedJob, savedJobService.getSavedJobsByUserID(1));
-        Mockito.verify(savedJobService).getSavedJobsByUserID(1);
+        Mockito.when(savedJobService.getSavedJobsByUserId(1)).thenReturn(savedJob);
+        Assertions.assertEquals(savedJob, savedJobService.getSavedJobsByUserId(1));
+        Mockito.verify(savedJobService).getSavedJobsByUserId(1);
     }
 
     @Test
@@ -61,7 +61,7 @@ public class SavedJobTests {
         boolean res=true;
         Mockito.when(savedJobService.deleteSavedJobs(1,1)).thenReturn(res);
         savedJob.remove(0);
-        Assertions.assertEquals(savedJob, savedJobService.getSavedJobsByUserID(1));
+        Assertions.assertEquals(savedJob, savedJobService.getSavedJobsByUserId(1));
         boolean res2=false;
         Mockito.when(savedJobService.deleteSavedJobs(1,12)).thenReturn(res2);
         Assertions.assertEquals(false, savedJobService.deleteSavedJobs(1, 12));

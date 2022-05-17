@@ -20,7 +20,7 @@ import java.util.Optional;
 @RequestMapping("api/v1/jobs")
 public class JobsController {
 
-    public JobServiceImpl jobService;
+    private final JobServiceImpl jobService;
 
     @Autowired
     public JobsController(JobServiceImpl jobService) {

@@ -42,7 +42,7 @@ public class SavedJobServiceImpl implements  SavedJobService{
     }
 
     @Override
-    public List<Jobs> getSavedJobsByUserID(int userId) {
+    public List<Jobs> getSavedJobsByUserId(int userId) {
         Optional<User> user = userJpa.findById(userId);
         List<Jobs> jobList = new ArrayList<>();
         if(user.isPresent()) {
