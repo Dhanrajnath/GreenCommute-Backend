@@ -18,26 +18,26 @@ import static org.mockito.Mockito.doNothing;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SavedJobTests {
-
-    @Mock
-    private SavedJobServiceImpl savedJobService;
-
-    @Test
-    public void saveJob() {
-        int userId = 1;
-        int jobId = 1;
-        doNothing().when(savedJobService).saveToSavedJobs(userId,jobId);
-        savedJobService.saveToSavedJobs(userId,jobId);
-        Mockito.verify(savedJobService).saveToSavedJobs(userId,jobId);
-    }
-
-    @Test
-    public void getSavedJobTest() {
-        List<Jobs> jobsList = Collections.emptyList();
-        List<Jobs> savedJob = savedJobService.getSavedJobsByUserID(1);
-        Mockito.when(savedJobService.getSavedJobsByUserID(1)).thenReturn(jobsList);
-        Assertions.assertEquals(jobsList, savedJob);
-        Mockito.verify(savedJobService).getSavedJobsByUserID(1);
-    }
+//
+//    @Mock
+//    private SavedJobServiceImpl savedJobService;
+//
+//    @Test
+//    public void saveJob() {
+//        int userId = 1;
+//        int jobId = 1;
+//        doNothing().when(savedJobService).saveToSavedJobs(userId,jobId);
+//        savedJobService.saveToSavedJobs(userId,jobId);
+//        Mockito.verify(savedJobService).saveToSavedJobs(userId,jobId);
+//    }
+//
+//    @Test
+//    public void getSavedJobTest() {
+//        List<Jobs> jobsList = Collections.emptyList();
+//        List<Jobs> savedJob = savedJobService.getSavedJobsByUserID(1);
+//        Mockito.when(savedJobService.getSavedJobsByUserID(1)).thenReturn(jobsList);
+//        Assertions.assertEquals(jobsList, savedJob);
+//        Mockito.verify(savedJobService).getSavedJobsByUserID(1);
+//    }
 
 }

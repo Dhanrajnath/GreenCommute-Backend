@@ -1,12 +1,15 @@
 package com.greencommute.backend.serviceTests;
 
 import com.greencommute.backend.entity.User;
+import com.greencommute.backend.repository.UserJpa;
 import com.greencommute.backend.service.UserServiceImpl;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -16,18 +19,19 @@ import java.util.Optional;
 @SpringBootTest
 public class UserTests {
 
-    @Mock
+    @InjectMocks
     private UserServiceImpl userService;
 
+    @Mock
+    public UserJpa userJpa;
 
     @Test
     public void getUserByIdTest(){
         int id=1;
-        User user= new User(id,"user1",null);
-        Optional<User> usersOptional = Optional.of(user);
-        Mockito.when(userService.getUserById(id)).thenReturn(usersOptional);
-        Assertions.assertEquals(usersOptional, userService.getUserById(id));
-        Mockito.verify(userService).getUserById(id);
+        Optional<User> user= Optional.of(new User(1, "user1", null));
+        Mockito.when(userJpa.findById(1)).thenReturn(user);
+        Assertions.assertEquals(user, userService.getUserById(id));
+        Mockito.verify(userJpa).findById(id);
     }
 
 }
