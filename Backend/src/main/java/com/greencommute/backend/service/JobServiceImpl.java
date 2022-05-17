@@ -10,8 +10,13 @@ import java.util.Optional;
 
 @Service
 public class JobServiceImpl implements JobService {
-    @Autowired
+
     public JobsJpa jobsJpa;
+
+    @Autowired
+    public JobServiceImpl(JobsJpa jobsJpa) {
+        this.jobsJpa = jobsJpa;
+    }
 
     @Override
     public Optional<Jobs> getJobById(int id) {

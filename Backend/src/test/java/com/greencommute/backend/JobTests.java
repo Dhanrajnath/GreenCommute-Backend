@@ -1,8 +1,14 @@
 package com.greencommute.backend;
 
 import com.greencommute.backend.entity.Jobs;
+import com.greencommute.backend.repository.JobsJpa;
+import com.greencommute.backend.repository.UserJpa;
 import com.greencommute.backend.service.JobService;
+import com.greencommute.backend.service.JobServiceImpl;
+import com.greencommute.backend.service.UserService;
+import com.greencommute.backend.service.UserServiceImpl;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -21,22 +27,29 @@ class JobTests {
     @Mock
     private JobService jobService;
 
+    @Mock
+    private JobsJpa jobsJpa;
+
+    @BeforeEach
+    void initUseCase(){
+        jobService = new JobServiceImpl(jobsJpa);
+    }
+
     @Test
     void getJobByIdTest() {
-        int id = 1;
         Jobs job = new Jobs(1,"Software Engineer","Developer","Hyderabad",null,null);
         Optional<Jobs> jobsOptional = Optional.of(job);
-        Mockito.when(jobService.getJobById(id)).thenReturn(jobsOptional);
-        Assertions.assertEquals(jobsOptional, jobService.getJobById(id));
-        Mockito.verify(jobService).getJobById(id);
+        Mockito.when(jobsJpa.findById(1)).thenReturn(jobsOptional);
+        Assertions.assertEquals(jobsOptional, jobService.getJobById(1));
+        Mockito.verify(jobsJpa).findById(1);
     }
 
     @Test
     void getAllJobsTest() {
         List<Jobs> jobsList = Collections.emptyList();
-        List<Jobs> jobs = jobService.getAllJobs();
+        List<Jobs> jobs = jobsJpa.findAll();
         Mockito.when(jobService.getAllJobs()).thenReturn(jobsList);
         Assertions.assertEquals(jobsList, jobs);
-        Mockito.verify(jobService).getAllJobs();
+        Mockito.verify(jobsJpa).findAll();
     }
 }

@@ -10,8 +10,12 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private UserJpa userJpa;
+
     @Autowired
-    public UserJpa userJpa;
+    public UserServiceImpl(UserJpa userJpa){
+        this.userJpa=userJpa;
+    }
 
     @Override
     public Optional<User> getUserById(int userId) {
