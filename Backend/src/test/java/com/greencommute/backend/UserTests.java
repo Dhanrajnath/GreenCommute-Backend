@@ -31,7 +31,7 @@ class UserTests {
     void getUserByIdTest() {
         Optional<User> user = Optional.of(new User(1, "Dhanrajnath", null));
         Mockito.when(userJpa.findById(1)).thenReturn(user);
-        Assertions.assertEquals(user,userJpa.findById(1));
+        Assertions.assertEquals(user,userService.getUserById(1));
         Mockito.verify(userJpa).findById(1);
     }
 }

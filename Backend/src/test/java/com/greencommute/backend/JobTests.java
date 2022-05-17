@@ -16,6 +16,7 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -46,10 +47,23 @@ class JobTests {
 
     @Test
     void getAllJobsTest() {
-        List<Jobs> jobsList = Collections.emptyList();
-        List<Jobs> jobs = jobsJpa.findAll();
-        Mockito.when(jobService.getAllJobs()).thenReturn(jobsList);
-        Assertions.assertEquals(jobsList, jobs);
+        List<Jobs> jobsList = new ArrayList<>();
+        Jobs job1 = new Jobs(1,"Software Engineer","Developer","Hyderabad",null,null);
+        Jobs job2 = new Jobs(2,"Software Engineer","Developer","Hyderabad",null,null);
+        jobsList.add(job1);
+        jobsList.add(job2);
+        Mockito.when(jobsJpa.findAll()).thenReturn(jobsList);
+        Assertions.assertEquals(jobsList, jobService.getAllJobs());
         Mockito.verify(jobsJpa).findAll();
+    }
+
+    @Test
+    void getJobsSearchByLocation() {
+        List<Jobs> jobsList = new ArrayList<>();
+        Jobs job = new Jobs(1,"Software Engineer","Developer","Hyderabad",null,null);
+        jobsList.add(job);
+        Mockito.when(jobsJpa.getJobsByLocation("Hyderabad")).thenReturn(jobsList);
+        Assertions.assertEquals(jobsList, jobService.getJobsSearchByLocation("Hyderabad"));
+        Mockito.verify(jobsJpa).getJobsByLocation("Hyderabad");
     }
 }
