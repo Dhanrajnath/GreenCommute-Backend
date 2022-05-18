@@ -5,13 +5,11 @@ import com.greencommute.backend.dto.UserDto;
 import com.greencommute.backend.entity.Jobs;
 import com.greencommute.backend.entity.User;
 import com.greencommute.backend.mapper.UserMapper;
-import com.greencommute.backend.mapper.UserMapperImpl;
 import com.greencommute.backend.service.SavedJobServiceImpl;
 import com.greencommute.backend.service.UserServiceImpl;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +19,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

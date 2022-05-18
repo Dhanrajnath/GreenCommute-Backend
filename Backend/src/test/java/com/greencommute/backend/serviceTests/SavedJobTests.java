@@ -63,7 +63,7 @@ public class SavedJobTests {
         savedJob.remove(0);
         Assertions.assertEquals(savedJob, savedJobService.getSavedJobsByUserId(1));
         boolean res2=false;
-        Mockito.when(savedJobService.deleteSavedJobs(1,12)).thenReturn(res2);
+        Mockito.when(savedJobService.deleteSavedJobs(22,12)).thenReturn(res2);
         Assertions.assertEquals(false, savedJobService.deleteSavedJobs(1, 12));
     }
 
