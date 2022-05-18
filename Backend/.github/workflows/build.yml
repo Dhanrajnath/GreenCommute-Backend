@@ -33,4 +33,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run:  ./mvnw verify sonar:sonar -Dsonar.host.url=https://sonarcloud.io  -Dsonar.organization=dhanrajnath -Dsonar.login=95cb48207f4b004450e8aab66dbd583e6cff98f2 -Dsonar.projectKey=Dhanrajnath_GreenCommute-Backend
+        run: mvn verify sonar:sonar -Dsonar.host.url=https://sonarcloud.io  -Dsonar.organization=dhanrajnath -Dsonar.login=95cb48207f4b004450e8aab66dbd583e6cff98f2 -Dsonar.projectKey=Dhanrajnath_GreenCommute-Backend
